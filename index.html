@@ -51,7 +51,7 @@
   if (parts.length === 2) return parts.pop().split(';').shift();
 }	*/	
 	
- function onEngineResponse(payload) {
+/* function onEngineResponse(payload) {
 	// handle engine response event
     var response = payload.responseDetails;
     //TeneoWebChat.call('show_upload_panel');	
@@ -63,7 +63,7 @@
    // }
     var sessionId = response.sessionId;
     
-    /*var cookieCheck = `${getCookie(cookieName)}`;
+    var cookieCheck = `${getCookie(cookieName)}`;
     console.log("cookieCheck", cookieCheck);
     if(cookieCheck===undefined || cookieCheck==='undefined' || cookieCheck=='undefined') {
     	document.cookie='myOldestSessID=' + sessionId + '; Max-Age=1707109200';
@@ -72,7 +72,7 @@
     if(response.output.parameters.GDPRConsentRevoked && response.output.parameters.GDPRConsentRevoked=='Y') {
 	document.cookie='myOldestSessID=GDPRConsentRevoked; Max-Age=1707109200';
 	console.log("cookieUpdated to revoke: ", cookieCheck); 
-    }*/
+    }
 if(response.output.parameters.asyncComplete && response.output.parameters.asyncComplete=='false') {
 var elements = document.getElementsByClassName('twc-user-input__send-icon-wrapper');
 console.log('elements ' + elements);
@@ -94,14 +94,14 @@ if(found) setTimeout(function(){
 	},1500);
 }
 	 
-    /*else {
+    else {
 	if(!cookieCheck.includes(sessionId)) {
 		document.cookie='myOldestSessID=' + sessionId + '-'+cookieCheck+'; Max-Age=1707109200';
 	}
-    }*/
+    }
 }
 
-TeneoWebChat.on('engine_response', onEngineResponse);
+TeneoWebChat.on('engine_response', onEngineResponse);*/
  
 
 </script>  
