@@ -2,55 +2,56 @@
  <head>
   <meta charset="UTF-8">
 <script src="teneo-web-chat.js"></script>
-<script src="customer-sdk.js"></script>  
-<script src="lc-extensions.js"></script>  
+
 <script>
 
  /*! For license information please see teneo-web-chat.js.LICENSE.txt */
-//const cookieName = 'myOldestSessID';
+const cookieName = 'myOldestSessID';
 	
-      window.onload = function () {
-        if (
-          window.TeneoWebChat &&
-            typeof window.TeneoWebChat.initialize === 'function'
-        ) {
-            var element = document.getElementById('teneo-web-chat');
-            const teneoProps = {
-                'teneoEngineUrl': 'https://violetpeacocks-e45133.bots.teneo.ai/leasepathquote_6phs505v768kcar619xnjqce33/',
-                'channel':'leasepath',
-                'teneoEngineParams': {
-                    demo:'leasa', 
-                    channel:'leasa',
-                    botname:'Leasa',
-                    prevSession:'${cookieCheck}'
-                },      
-                'title':'Get a quote from virtual agent Leasa',
-                'locale':'en-US',
-                'autoRedirect':false,
-                'showCloseButton':true,
-                'first_use_asr_system_message':'',
-                'showAsrButton':true,
-                'showTtsButton':true,
-                'msVoice':'en-US-JennyNeural',
-                'msCognitiveSubscriptionKey':'e80f77176d1349709e6d237bbe3d476d',
-                'msCognitiveRegion':'uksouth',
-                'asrActive':true,
-                'ttsActive':true,
-                'voice':'en-US-JennyNeural'
-            }
-          window.TeneoWebChat.initialize(element,teneoProps);
-        }
+ window.onload = function () {
+    watch_for_chat();
+    if (
+      window.TeneoWebChat &&
+        typeof window.TeneoWebChat.initialize === 'function'
+    ) {
+      var element = document.getElementById('teneo-web-chat');
+      var cookieCheck = getCookie(cookieName);
+      console.log("cookieCheck1", cookieCheck);	    
+      var teneoProps = {
+        'teneoEngineUrl': 'https://violetpeacocks-e45133.bots.teneo.ai/leasepathquote_6phs505v768kcar619xnjqce33/',
+        'channel':'leasepath',
+	 'teneoEngineParams': {
+        demo:'leasa', 
+        channel:'leasa',
+        botname:'Leasa',
+        prevSession:`${cookieCheck}`
+        },      
+        'title':'Get a quote from virtual agent Leasa',
+        'autoRedirect':false,
+        'showCloseButton':true,
+        'first_use_asr_system_message':'',
+        'showAsrButton':true,
+        'showTtsButton':true,
+        'msVoice':'en-US-JennyNeural',
+        'msCognitiveSubscriptionKey':'e80f77176d1349709e6d237bbe3d476d',
+        'msCognitiveRegion':'uksouth',
+	'asrActive':true,
+	'ttsActive':true,
+	'locale':'en-US',
+	'voice':'en-US-JennyNeural'
       }
+      window.TeneoWebChat.initialize(element,teneoProps);
+    }
+  }
 
-
-/*function getCookie(name) {
+function getCookie(name) {
   const value = `; ${document.cookie}`;
   //console.log("cookie values: ", value);	
   const parts = value.split(`; ${name}=`);
   if (parts.length === 2) return parts.pop().split(';').shift();
-}	*/	
+}		
 	
-/* function onEngineResponse(payload) {
+ function onEngineResponse(payload) {
 	// handle engine response event
     var response = payload.responseDetails;
     //TeneoWebChat.call('show_upload_panel');	
@@ -93,14 +94,14 @@ if(found) setTimeout(function(){
 	},1500);
 }
 	 
-    else {
+    /*else {
 	if(!cookieCheck.includes(sessionId)) {
 		document.cookie='myOldestSessID=' + sessionId + '-'+cookieCheck+'; Max-Age=1707109200';
 	}
-    }
+    }*/
 }
 
-TeneoWebChat.on('engine_response', onEngineResponse);*/
+TeneoWebChat.on('engine_response', onEngineResponse);
  
 
 </script>  
