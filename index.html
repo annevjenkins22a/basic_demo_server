@@ -1,230 +1,62 @@
-<html>
- <head>
-  <meta charset="UTF-8">
-<script src="teneo-web-chat.js"></script>
-
-<script>
-
- /*! For license information please see teneo-web-chat.js.LICENSE.txt */
-const cookieName = 'myOldestSessID';
-	
- window.onload = function () {
-    watch_for_chat();
-    if (
-      window.TeneoWebChat &&
-        typeof window.TeneoWebChat.initialize === 'function'
-    ) {
-      var element = document.getElementById('teneo-web-chat');
-      var cookieCheck = getCookie(cookieName);
-      console.log("cookieCheck1", cookieCheck);	    
-      var teneoProps = {
-        'teneoEngineUrl': 'https://violetpeacocks-e45133.bots.teneo.ai/leasepathquote_6phs505v768kcar619xnjqce33/',
-        'channel':'leasepath',
-	 'teneoEngineParams': {
-        demo:'leasa', 
-        channel:'leasa',
-        botname:'Leasa',
-        prevSession:`${cookieCheck}`
-        },      
-        'title':'Get a quote from virtual agent Leasa',
-        'autoRedirect':false,
-        'showCloseButton':true,
-        'first_use_asr_system_message':'',
-        'showAsrButton':true,
-        'showTtsButton':true,
-        'msVoice':'en-US-JennyNeural',
-        'msCognitiveSubscriptionKey':'e80f77176d1349709e6d237bbe3d476d',
-        'msCognitiveRegion':'uksouth',
-	'asrActive':true,
-	'ttsActive':true,
-	'locale':'en-US',
-	'voice':'en-US-JennyNeural'
-      }
-      window.TeneoWebChat.initialize(element,teneoProps);
-    }
-  }
-
-function getCookie(name) {
-  const value = `; ${document.cookie}`;
-  //console.log("cookie values: ", value);	
-  const parts = value.split(`; ${name}=`);
-  if (parts.length === 2) return parts.pop().split(';').shift();
-}		
-	
- function onEngineResponse(payload) {
-	// handle engine response event
-    var response = payload.responseDetails;
-    //TeneoWebChat.call('show_upload_panel');	
-   // if(response.output.parameters.msVoice && response.output.parameters.msVoice!="") {
-   // 	TeneoWebChat.call('set_ms_voice', response.output.parameters.msVoice );
-   // 	TeneoWebChat.call('set_locale',response.output.parameters.locale );
-   //     console.log("voice", response.output.parameters.msVoice); 	    
-   //     console.log("locale", response.output.parameters.locale);
-   // }
-    var sessionId = response.sessionId;
-    
-    var cookieCheck = `${getCookie(cookieName)}`;
-    console.log("cookieCheck", cookieCheck);
-    if(cookieCheck===undefined || cookieCheck==='undefined' || cookieCheck=='undefined') {
-    	document.cookie='myOldestSessID=' + sessionId + '; Max-Age=1707109200';
-	console.log("cookieCreated", sessionId);    
-    } 
-    if(response.output.parameters.GDPRConsentRevoked && response.output.parameters.GDPRConsentRevoked=='Y') {
-	document.cookie='myOldestSessID=GDPRConsentRevoked; Max-Age=1707109200';
-	console.log("cookieUpdated to revoke: ", cookieCheck); 
-    }
-if(response.output.parameters.asyncComplete && response.output.parameters.asyncComplete=='false') {
-var elements = document.getElementsByClassName('twc-user-input__send-icon-wrapper');
-console.log('elements ' + elements);
-var found = elements[0];
- console.log('found: ' + found);
-if(found) setTimeout(function(){
-	var elements = document.getElementsByClassName('twc-user-input__send-icon-wrapper');
-	var found = elements[0];
- 	console.log('found 2: ' + found);
-	var value = document.getElementById("twc-user-input-field").value;
-	console.log('value: ' + value);
-	if(value==""){
-		var teneoMsg = { "text": "continue",  "silent": true };
-		TeneoWebChat.call('send_input', teneoMsg);
-		//document.getElementById("twc-user-input-field").value="Continue";
-		//found.click();
-		console.log('submitting');
-	}
-	},1500);
-}
-	 
-    /*else {
-	if(!cookieCheck.includes(sessionId)) {
-		document.cookie='myOldestSessID=' + sessionId + '-'+cookieCheck+'; Max-Age=1707109200';
-	}
-    }*/
-}
-
-TeneoWebChat.on('engine_response', onEngineResponse);
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <title>Leasa</title>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0 user-scalable=no"/>
  
-
-</script>  
-<script>
  
-
-const resize_spec = '* 1.5';
- 
-function find_node( path, context )
-{
-     var found = document.evaluate( path, context, null,
-                                    XPathResult.ANY_UNORDERED_NODE_TYPE, null );
-     return ( found && found.singleNodeValue ) ? found.singleNodeValue : null;
-}
-
-function watch_for_chat ()
-{
-    const sentinel2 = function(mutants, observer)
-    {
-        for( const mutant of mutants )
-        {
-            var found = false;
-            if (mutant.type != 'childList')
-                 continue;
-
-            var added = mutant.addedNodes;
-            for (let i = 0; i < added.length; i++)
-            {
-                if( added[i].id == 'twc-chat-window' )
-                    found = added[i];
-                else
-                    found = find_node( "//*[@id='twc-chat-window']", added[i] );
-
-                if( found )
-                {
-                    var width;
-                    var style = window.getComputedStyle( found );
-                    //width = 'calc( ' + style.width + ' ' + resize_spec + ' )';
-                    width='40%';
-                    found.style['min-height'] = '95%';
-                    found.style.width = width;
-                    break;
-                }
+    <!-- Teneo Web Chat start -->
+    <script src="script/teneo-web-chat.js"></script>
+    <script>
+      window.onload = function () {
+        if (
+          window.TeneoWebChat &&
+            typeof window.TeneoWebChat.initialize === 'function'
+        ) {
+            var element = document.getElementById('teneo-web-chat');
+            const teneoProps = {
+                'teneoEngineUrl': 'https://violetpeacocks-e45133.bots.teneo.ai/leasepathquote_6phs505v768kcar619xnjqce33/',
+                'channel':'leasepath',
+                'teneoEngineParams': {
+                    demo:'leasa', 
+                    channel:'leasa',
+                    botname:'Leasa',
+                    prevSession:'${cookieCheck}'
+                },      
+                'title':'Get a quote from virtual agent Leasa',
+                'locale':'en-US',
+                'autoRedirect':false,
+                'showCloseButton':true,
+                'first_use_asr_system_message':'',
+                'showAsrButton':true,
+                'showTtsButton':true,
+                'msVoice':'en-US-JennyNeural',
+                'msCognitiveSubscriptionKey':'e80f77176d1349709e6d237bbe3d476d',
+                'msCognitiveRegion':'uksouth',
+                'asrActive':true,
+                'ttsActive':true,
+                'voice':'en-US-JennyNeural',
+                'locale':'en-US'
             }
-        }    
-    };
-
-    const sentinel1 = function(mutants, observer)
-    {
-        for( const mutant of mutants )
-        {
-            var found = false;
-            if (mutant.type != 'childList')
-                 continue;
-
-            var added = mutant.addedNodes;
-            for (let i = 0; i < added.length; i++)
-            {
-                if( added[i].id == 'twc-launchbutton' )
-                    found = added[i];
-                else
-                    found = find_node( "//*[@id='twc-launchbutton']", added[i] );
-
-                if( found )
-                {
-                    observer.disconnect();
-                    found.click();
-                    break;
-                }
-           }
+          window.TeneoWebChat.initialize(element,teneoProps);
         }
-    };
-
-    const target   = document.getElementsByTagName('body')[0];
-    const config   = { attributes: false, childList: true, subtree: true };; 
- 
-    if( target )
-    {
-         const open = new MutationObserver( sentinel1 );
-         const wide = new MutationObserver( sentinel2 )
-         if( open )
-             open.observe( target, config );
-         if( wide )
-             wide.observe( target, config );
-    }
-}
-  </script>
-  <style>
- .teneo-web-chat {
-  --primary-color: #04a5f0 !important;
-  --light-bg-color: #f1511b !important;
-  --launch-button-bg-color: #04a5f0 !important;
-  --header-bg-color: #7fcb28 !important;
-  --bot-message-fg-color: #ffffff !important;
-  --card-bg-color: #81bb05!important;
-  --form-subtitle-text-color: #000000 !important;
-  --dark-fg-color: #000000 !important;
-  --success-color: #f1511b !important;
-  --danger-color: #f1511b !important;
-  --secondary-color: #81bb05 !important;
-  --text-link-color: #E6E6E6 !important;
-  --link-button-bg-color: #000000 !important;
-  --quickreply-expired-color:  #04a5f0 !important;
-} 
-// button drop shadow
-.twc-launch-button:hover {
-  box-shadow: 0 0px 27px 1.5px rgba(0, 0, 0, 0.2);
-}
-
-// increase size of the icon slightly
-.twc-launch-button:hover .twc-launch-button__open-icon {
-  transform: scale(1.5);
-}   
-</style>
- </head>
-    <body>
-<!-- Teneo Web Chat end -->
+      }
+    </script>
+    <!-- Teneo Web Chat end -->
     
-<img class="image1" crossOrigin="anonymous" src="https://avj-images.s3.eu-west-2.amazonaws.com/leasepath.png" style="width:100%" /> 
-
-<!-- Teneo Web Chat start -->
+    
+    <style>
+        body {
+            background-image: url('images/teneo.ai.png');
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-position: center;
+        }
+    </style>
+</head>
+<body>
+	<img class="image1" crossOrigin="anonymous" src="https://avj-images.s3.eu-west-2.amazonaws.com/leasepath.png" style="width:100%" /> 
 <div id="teneo-web-chat"></div>
-<!--div id="leopardChatWindow"></div>
-<script src="https://afs-customer-services.herokuapp.com/embed-leopard.js"></script-->
-    </body>
+</body>
 </html>
