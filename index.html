@@ -41,7 +41,6 @@ const cookieName = 'myOldestSessID';
 	'voice':'en-US-JennyNeural'
       }
       window.TeneoWebChat.initialize(element,teneoProps);
-      window.TeneoWebChat.call('show_upload_panel');
     }
   }
 
@@ -55,7 +54,7 @@ function getCookie(name) {
  function onEngineResponse(payload) {
 	// handle engine response event
     var response = payload.responseDetails;
-
+    TeneoWebChat.call('show_upload_panel');	
     if(response.output.parameters.msVoice && response.output.parameters.msVoice!="") {
     	TeneoWebChat.call('set_ms_voice', response.output.parameters.msVoice );
     	TeneoWebChat.call('set_locale',response.output.parameters.locale );
