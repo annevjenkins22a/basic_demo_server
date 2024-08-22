@@ -15,33 +15,33 @@ const cookieName = 'myOldestSessID';
       window.TeneoWebChat &&
         typeof window.TeneoWebChat.initialize === 'function'
     ) {
-      var element = document.getElementById('teneo-web-chat');
-      var cookieCheck = getCookie(cookieName);
-      console.log("cookieCheck1", cookieCheck);	    
-      var teneoProps = {
-        'teneoEngineUrl': 'https://violetpeacocks-e45133.bots.teneo.ai/leasepathquote_6phs505v768kcar619xnjqce33/',
-        'channel':'leasepath',
-	 'teneoEngineParams': {
-        demo:'leasa', 
-        channel:'leasa',
-        botname:'Leasa',
-        prevSession:`${cookieCheck}`
-        },      
-        'title':'Get a quote from virtual agent Leasa',
-        'autoRedirect':false,
-        'showCloseButton':true,
-        'first_use_asr_system_message':'',
-        'showAsrButton':true,
-        'showTtsButton':true,
-        'msVoice':'en-US-JennyNeural',
-        'msCognitiveSubscriptionKey':'e80f77176d1349709e6d237bbe3d476d',
-        'msCognitiveRegion':'uksouth',
-	'asrActive':true,
-	'ttsActive':true,
-	'locale':'en-US',
-	'voice':'en-US-JennyNeural'
-      }
-      window.TeneoWebChat.initialize(element,teneoProps);
+        var element = document.getElementById('teneo-web-chat');
+            const teneoProps = {
+                'teneoEngineUrl': 'https://violetpeacocks-e45133.bots.teneo.ai/leasepathquote_6phs505v768kcar619xnjqce33/',
+                'channel':'leasepath',
+                'teneoEngineParams': {
+                    demo:'leasa', 
+                    channel:'leasa',
+                    botname:'Leasa',
+                    prevSession:'${cookieCheck}'
+                },      
+                'title':'Get a quote from virtual agent Leasa',
+                'locale':'en-US',
+                'autoRedirect':false,
+                'showCloseButton':true,
+                'first_use_asr_system_message':'',
+                'showAsrButton':true,
+                'showTtsButton':true,
+                'msVoice':'en-US-JennyNeural',
+                'msCognitiveSubscriptionKey':'e80f77176d1349709e6d237bbe3d476d',
+                'msCognitiveRegion':'uksouth',
+                'asrActive':true,
+                'ttsActive':true,
+                'voice':'en-US-JennyNeural',
+                'locale':'en-US'
+            }
+          window.TeneoWebChat.initialize(element,teneoProps);
+
     }
   }
 
