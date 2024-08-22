@@ -7,7 +7,7 @@
 <script>
 
  /*! For license information please see teneo-web-chat.js.LICENSE.txt */
-const cookieName = 'myOldestSessID';
+//const cookieName = 'myOldestSessID';
 	
  window.onload = function () {
     watch_for_chat();
@@ -45,12 +45,12 @@ const cookieName = 'myOldestSessID';
     }
   }
 
-function getCookie(name) {
+/*function getCookie(name) {
   const value = `; ${document.cookie}`;
   //console.log("cookie values: ", value);	
   const parts = value.split(`; ${name}=`);
   if (parts.length === 2) return parts.pop().split(';').shift();
-}		
+}	*/	
 	
  function onEngineResponse(payload) {
 	// handle engine response event
@@ -64,7 +64,7 @@ function getCookie(name) {
    // }
     var sessionId = response.sessionId;
     
-    var cookieCheck = `${getCookie(cookieName)}`;
+    /*var cookieCheck = `${getCookie(cookieName)}`;
     console.log("cookieCheck", cookieCheck);
     if(cookieCheck===undefined || cookieCheck==='undefined' || cookieCheck=='undefined') {
     	document.cookie='myOldestSessID=' + sessionId + '; Max-Age=1707109200';
@@ -73,7 +73,7 @@ function getCookie(name) {
     if(response.output.parameters.GDPRConsentRevoked && response.output.parameters.GDPRConsentRevoked=='Y') {
 	document.cookie='myOldestSessID=GDPRConsentRevoked; Max-Age=1707109200';
 	console.log("cookieUpdated to revoke: ", cookieCheck); 
-    }
+    }*/
 if(response.output.parameters.asyncComplete && response.output.parameters.asyncComplete=='false') {
 var elements = document.getElementsByClassName('twc-user-input__send-icon-wrapper');
 console.log('elements ' + elements);
@@ -104,20 +104,7 @@ if(found) setTimeout(function(){
 
 TeneoWebChat.on('engine_response', onEngineResponse);
  
-  window.TENEOCTX || (TENEOCTX = {});
-  TENEOCTX = {
-    init: {
-      trustedDomain: "", // something like http://localhost:8080 // "" = receive and post messages to all domains
-      allowScripts: true // false = if you want to disable potential eval
-    },
-    ctx: {
-      eventSource: "leopard-embed",
-      pageTitle: document.title,
-      pageUrl: window.location.href,
-      pageTopic: "Help",
-      message: "This was sent from the customer's web site"
-    }
-  };
+
 </script>  
 <script>
  
