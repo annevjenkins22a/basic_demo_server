@@ -143,9 +143,9 @@ const fileUploader = {
        console.log("Content to Azure OAI: " + JSON.stringify(payload));
       var request = new Request('https://leasepathembedding.openai.azure.com/openai/deployments/gpt4o/chat/completions?api-version=2024-02-15-preview&Content-Type=application/json&api-key=6ee42a5093c84304b98f2832320b1c61', 
          { method: 'POST', 
-          // body: JSON.stringify(payload), 
-	  body: payload, 
-           mode: 'no-cors',
+           body: JSON.stringify(payload), 
+	  //body: payload, 
+          // mode: 'no-cors',
            headers: { 'Content-Type': 'application/json' } 
          });
 	//request.setRequestHeader("Content-Type","application/json");
