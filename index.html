@@ -139,7 +139,7 @@ const fileUploader = {
          //var contentToAOAI = {'messages': ['coordinates', "parameters":  parameters, 'channel':'geoloc']};
        console.log("Content to Azure OAI: " + JSON.stringify(payload));
       var request = new Request('https://leasepathembedding.openai.azure.com/openai/deployments/gpt4omini/chat/completions', 
-         { method: 'GET', 
+         { method: 'POST', 
            body: JSON.stringify(payload), 
            mode: 'no-cors',
            headers: { 'Content-Type': 'application/json', 'api-key': API_KEY, } 
