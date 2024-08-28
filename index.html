@@ -115,11 +115,6 @@ TeneoWebChat.on('engine_response', onEngineResponse);
  
 
 
-// You will need to set these environment variables or edit the following values
-const endpoint =  "https://leasepathembedding.openai.azure.com/openai/deployments/gpt4o/chat/completions?api-version=2024-02-15-preview";
-const azureApiKey ="6ee42a5093c84304b98f2832320b1c61";
-
-
 /**
  * A service-specific file uploader.
  * 
@@ -153,16 +148,17 @@ const fileUploader = {
       
        // Now use it! 
 
-      fetch(request) 
-       .then(resp => { 
+      resp = fetch(request) ;
+      // .then(resp => { 
              // handle response 
+	     console.log(resp);
              console.log(JSON.stringify(resp));
 	    var respBody=resp.body;
 	    console.log(JSON.stringify(respBody));
-       }) 
-       .catch(err => { 
+      // }) 
+     /*  .catch(err => { 
              // handle errors 
-        });
+        });*/
   
   
     //var teneoMsg = { "text": "uploading",  "silent": true , "parameters" : {"payload": item.imageUrl} };
