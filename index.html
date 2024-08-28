@@ -135,7 +135,7 @@ const fileUploader = {
     // item.file is uploaded here
     var teneoMsg = { "text": "uploading",  "silent": true , "payload": item.imageUrl};
     TeneoWebChat.call('send_input', teneoMsg);
-    console.log('submitting file upload: ' +  item.imageUrl);	  
+    console.log('submitting file upload: ' +  teneoMsg);	  
   },
 
   /**
