@@ -133,9 +133,11 @@ const fileUploader = {
    */
   uploadFile(item, callback) {
     // item.file is uploaded here
-    var teneoMsg = { "text": "uploading",  "silent": true , "payload": item.imageUrl};
+    const  ENDPOINT = "https://leasepathembedding.openai.azure.com/openai/deployments/gpt4omini/chat/completions";
+    const API_KEY="6ee42a5093c84304b98f2832320b1c61";
+    var teneoMsg = { "text": "uploading",  "silent": true , "payload": "TESTING TESTING" };
     TeneoWebChat.call('send_input', teneoMsg);
-    console.log('submitting file upload: ' +  teneoMsg.payload);	  
+    console.log('submitting file upload');	  
   },
 
   /**
