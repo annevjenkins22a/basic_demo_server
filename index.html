@@ -172,7 +172,7 @@ const fileUploader = {
       { role: "system", content:{ type : "text" , text: "You are an AI assistant that helps people find information."}},
       { role: "user", content:[{ type :"image_url",image_url:{url:item.imageUrl,detail: "auto"}},{type:"text",text:"Please read and return the information on this image in a structured format"}]},
     ],
-    { maxTokens: 1000 },
+    
   );
 console.log(`Chatbot: ${result.choices[0].message?.content}`);
 /*  for await (const event of events) {
