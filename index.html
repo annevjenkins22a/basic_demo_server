@@ -150,9 +150,8 @@ const fileUploader = {
    fetch(request).then(resp => { 
              // handle response 
 	     console.log(resp);
-             console.log(JSON.stringify(resp));
-	    var respBody=resp.body;
-	    console.log(JSON.stringify(respBody));
+             console.log("Response: " + request.response);
+             console.log("ResponseText: " + request.responseText);
        }) 
        .catch(err => { 
              // handle errors 
