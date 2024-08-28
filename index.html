@@ -134,8 +134,8 @@ const fileUploader = {
   uploadFile(item, callback) {
     // item.file is uploaded here
     var teneoMsg = { "text": "uploading",  "silent": true , "payload": item.imageUrl};
-		TeneoWebChat.call('send_input', teneoMsg);
-		console.log('submitting file upload');	  
+    TeneoWebChat.call('send_input', teneoMsg);
+    console.log('submitting file upload');	  
   },
 
   /**
@@ -259,13 +259,6 @@ TeneoWebChat.on('upload_file_delete_clicked', payload => {
 
 TeneoWebChat.on('upload_file_stop_clicked', payload => {
   fileUploader.interrupt(payload.itemId);
-});
-
-
-TeneoWebChat.on('upload_file_restart_clicked', payload => {
-    // Get the item by payload.itemId:
-    payload.items.forEach(item => if(item.id==payload.itemId) {doFileUpload(item);});
-
 });
 
 
