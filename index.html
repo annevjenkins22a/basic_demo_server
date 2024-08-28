@@ -150,12 +150,11 @@ const fileUploader = {
    fetch(request).then(resp => { 
              // handle response 
 	     console.log(resp);
-       }) 
-       .then(data => { 
-	     console.log("Response: " + data);
-	       var teneoMsg = { "text": "uploading",  "silent": true , "parameters" : {"payload": "TEST TEST TEST"} };
-    		TeneoWebChat.call('send_input', teneoMsg);
-       })
+	    var respData = resp.json();
+	   console.log(respData);
+	    var teneoMsg = { "text": "uploading",  "silent": true , "parameters" : {"payload": "TEST TEST TEST"} };
+    	TeneoWebChat.call('send_input', teneoMsg);
+   }) 
        .catch(err => { 
              // handle errors 
         });
