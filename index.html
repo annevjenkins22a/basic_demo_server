@@ -152,10 +152,14 @@ const fileUploader = {
 	     console.log(resp);
 	    var respData = resp.json();
 	   console.log(respData);
-	    var teneoMsg = { "text": "uploading",  "silent": true , "parameters" : {"payload": "TEST TEST TEST"} };
-    	TeneoWebChat.call('send_input', teneoMsg);
+	   return respData;
    }) 
-       .catch(err => { 
+    .then(function (json) {
+        console.log(json);
+	 var teneoMsg = { "text": "uploading",  "silent": true , "parameters" : {"payload": "TEST TEST TEST"} };
+    	TeneoWebChat.call('send_input', teneoMsg);
+    })
+	   .catch(err => { 
              // handle errors 
         });
   
