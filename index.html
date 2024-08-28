@@ -135,6 +135,28 @@ const fileUploader = {
     // item.file is uploaded here
     const  ENDPOINT = "https://leasepathembedding.openai.azure.com/openai/deployments/gpt4omini/chat/completions";
     const API_KEY="6ee42a5093c84304b98f2832320b1c61";
+	 var payload={'messages':[{'role':'system','content':[{'type':'text','text':'You are an AI assistant that helps people find information.'}]},{'role':'user','content':[{'type':'image_url','image_url':{'url':item.imageUrl}},{'type':'text','text':'Please read and return the information on this image in a structured format'}]}],'temperature':0.7,'top_p':0.95,'max_tokens':10000};
+         //var contentToAOAI = {'messages': ['coordinates', "parameters":  parameters, 'channel':'geoloc']};
+       console.log("Content to Azure OAI: " + JSON.stringify(payload));
+      var request = new Request('https://leasepathembedding.openai.azure.com/openai/deployments/gpt4omini/chat/completions', 
+         { method: 'GET', 
+           body: JSON.stringify(payload), 
+           mode: 'no-cors',
+           headers: { 'Content-Type': 'application/json', 'api-key': API_KEY, } 
+         });
+       console.log(request);
+       //console.log(request.headers.get('cookie'));
+       // Now use it! 
+
+      fetch(request) 
+       .then(resp => { 
+             // handle response 
+            console.log(resp);
+       }) 
+       .catch(err => { 
+             // handle errors 
+        });
+	  
     var teneoMsg = { "text": "uploading",  "silent": true , "payload": "TESTING TESTING" };
     TeneoWebChat.call('send_input', teneoMsg);
     console.log('submitting file upload');	  
