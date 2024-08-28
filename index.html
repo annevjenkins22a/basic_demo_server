@@ -133,7 +133,7 @@ const fileUploader = {
    */
   uploadFile(item, callback) {
     // item.file is uploaded here
-	 var payload={'messages':[{'role':'system','content':[{'type':'text','text':'You are an AI assistant that helps people find information.'}]},{'role':'user','content':[{'type':'image_url','image_url':{'url':`${item.imageUrl}`}},{'type':'text','text':'Please read and return the information on this image in a structured format'}]}],'temperature':0.7,'top_p':0.95,'max_tokens':10000};
+	 var payload={'messages':[{'role':'system','content':[{'type':'text','text':'You are an AI assistant that helps people find information.'}]},{'role':'user','content':[{'type':'image_url','image_url':{'url':`${item.imageUrl}`}},{'type':'text','text':'Please read and return the information on this image in a structured format'}]}],'temperature':0.7,'top_p':0.95};
          //var contentToAOAI = {'messages': ['coordinates', "parameters":  parameters, 'channel':'geoloc']};
        console.log("Content to Azure OAI: " + JSON.stringify(payload));
       var request = new Request('https://leasepathembedding.openai.azure.com/openai/deployments/gpt4o/chat/completions?api-version=2024-02-15-preview&api-key=6ee42a5093c84304b98f2832320b1c61&Content-Type=application/json', 
