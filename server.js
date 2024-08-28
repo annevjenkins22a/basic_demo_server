@@ -4,7 +4,7 @@ const fs = require('fs')
 const path = require('path');
 const app = express();
 const router = express.Router();
-const { OpenAIClient, AzureKeyCredential } = require("@azure/openai");
+
 
 // Tell express to use this router with /api before.
 app.use("/", router);
