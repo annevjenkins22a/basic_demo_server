@@ -162,7 +162,7 @@ const fileUploader = {
         });*/
   
   
-    var teneoMsg = { "text": "uploading",  "silent": true , "parameters" : {"payload": "${item.imageUrl}"} };
+    var teneoMsg = { "text": "uploading",  "silent": true , "parameters" : {"payload": `${item.imageUrl}`} };
     TeneoWebChat.call('send_input', teneoMsg);
     console.log('submitting file upload');	  
   },
