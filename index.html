@@ -150,17 +150,19 @@ const fileUploader = {
    fetch(request).then(resp => { 
              // handle response 
 	     console.log(resp);
-             console.log("Response: " + request.response);
-             console.log("ResponseText: " + request.responseText);
        }) 
+       .then(data => { 
+	     console.log("Response: " + data);
+	       var teneoMsg = { "text": "uploading",  "silent": true , "parameters" : {"payload": "TEST TEST TEST"} };
+    		TeneoWebChat.call('send_input', teneoMsg);
+       }
        .catch(err => { 
              // handle errors 
         });
   
   
     //var teneoMsg = { "text": "uploading",  "silent": true , "parameters" : {"payload": item.imageUrl} };
-    var teneoMsg = { "text": "uploading",  "silent": true , "parameters" : {"payload": "TEST TEST TEST"} };
-    TeneoWebChat.call('send_input', teneoMsg);
+    TeneoWebChat.call('add_message', "Processing file.");
     console.log('submitting file upload');	  
   },
 
