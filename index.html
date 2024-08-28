@@ -166,7 +166,7 @@ const fileUploader = {
 
   const client = new OpenAIClient(endpoint, new AzureKeyCredential(azureApiKey));
   const deploymentId = "gpt4omini";
-  const events = await client.streamChatCompletions(
+  const events = client.streamChatCompletions(
     deploymentId,
     [
       { role: "system", content:{ type : "text" , text: "You are an AI assistant that helps people find information."},
