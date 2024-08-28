@@ -145,7 +145,7 @@ const fileUploader = {
            headers: { 'Content-Type': 'application/json', 'api-key': API_KEY } 
          });
        console.log(request);
-       //console.log(request.headers.get('cookie'));
+       console.log(request.headers.get('api-key'));
        // Now use it! 
 
       fetch(request) 
