@@ -1,1 +1,122 @@
+/* Chat Widget */
+ /* Main container */
+ #teneo-web-widget {
 
+#TWW .tww-chat-widget-container-position { }
+
+#TWW .tww-chat-widget-container-style { }
+
+#TWW .tww-chat-widget-container-default-size { }
+
+#TWW .tww-chat-widget-container-fullscreen-size { }
+
+#TWW .tww-chat-form-container { }
+
+/* Header */
+#TWW .tww-chat-widget-container-header { }
+
+#TWW .tww-chat-widget-container-header-font { }
+
+#TWW .tww-chat-widget-container-header-icons-position { }
+
+/* Buttons */
+#TWW .tww-chat-widget-container-header-button-maximize-minimize { }
+
+#TWW .tww-chat-widget-container-header-button-dark-light-theme { }
+
+#TWW .tww-chat-widget-container-header-button-close { }
+
+/* Chat Form message type */
+#TWW .tww-chat-form { }
+
+#TWW .tww-chat-form-label-position { }
+
+#TWW .tww-chat-form-label-style input { }
+
+#TWW .tww-chat-form-input-style { }
+
+#TWW .tww-chat-form-send-button { }
+
+/* Chat component */
+
+#TWW .tww-chat-fullscreen { }
+
+#TWW .tww-chat-responsive { }
+
+#TWW .tww-chat-message-container { }
+
+/* Message */
+
+#TWW .tww-chat-message-avatar-size { }
+
+#TWW .tww-chat-message-avatar-style { }
+
+#TWW .tww-chat-message-paddings-user { }
+
+#TWW .tww-chat-message-paddings-bot { }
+
+#TWW .tww-chat-message-content-container { }
+
+#TWW .tww-chat-message-content-container-user { }
+
+#TWW .tww-chat-message-content-container-animation-scroll { }
+
+#TWW .tww-chat-message-content-container-message-style { }
+
+#TWW .tww-chat-message-format { }
+
+#TWW .tww-chat-user-message-structure { }
+
+#TWW .tww-chat-user-message-style { }
+
+/* Buttons message type */
+
+#TWW .tww-button-container { }
+
+#TWW .tww-button-generic-style { }
+
+#TWW .tww-button-color-classes-primary { }
+
+#TWW .tww-button-color-classes-secondary { }
+
+#TWW .tww-button-color-classes-success { }
+
+#TWW .tww-button-color-classes-danger { }
+
+#TWW .tww-button-color-classes-warning { }
+
+#TWW .tww-button-color-classes-info { }
+
+#TWW .tww-button-variant-contained { }
+
+#TWW .tww-button-variant-badge { }
+
+/* Badge Variants */
+#TWW .tww-badge-size-xs { }
+
+#TWW .tww-badge-size-sm { }
+
+#TWW .tww-badge-size-md { }
+
+#TWW .tww-badge-size-lg { }
+
+/* Non-Badge Variants */
+#TWW .tww-button-size-xs { }
+
+#TWW .tww-button-size-sm { }
+
+#TWW .tww-button-size-md { }
+
+#TWW .tww-button-size-lg { }
+
+#TWW .tww-button-font-size-xs { }
+
+#TWW .tww-button-font-size-sm { }
+
+#TWW .tww-button-font-size-md { }
+
+#TWW .tww-button-font-size-lg { }
+
+#TWW .tww-message-loader { }
+
+}
