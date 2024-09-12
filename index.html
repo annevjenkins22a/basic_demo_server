@@ -17,8 +17,8 @@ const cookieName = 'myOldestSessID';
  window.onload = function () {
     watch_for_chat();
     if (
-      window.TeneoWebChat &&
-        typeof window.TeneoWebChat.initialize === 'function'
+      window.TeneoWebWidget &&
+        typeof window.TeneoWebWidget.initialize === 'function'
     ) {
       var element = document.getElementById('teneo-web-chat');
       var cookieCheck = getCookie(cookieName);
@@ -46,7 +46,7 @@ const cookieName = 'myOldestSessID';
 	'locale':'en-US',
 	'voice':'en-US-JennyNeural'
       }
-      window.TeneoWebChat.initialize(element,teneoProps);
+      //window.TeneoWebWidget.initialize(element,teneoProps);
     }
   }
 
@@ -61,14 +61,14 @@ function getCookie(name) {
 	// handle engine response event
     var response = payload.responseDetails;
    if(response.output.parameters.UploadImage && response.output.parameters.UploadImage=='Y') {
-      TeneoWebChat.call('show_upload_panel');	
+      TeneoWebWidget.call('show_upload_panel');	
    }
    else {
-	TeneoWebChat.call('hide_upload_panel');	 
+	TeneoWebWidget.call('hide_upload_panel');	 
    }
    // if(response.output.parameters.msVoice && response.output.parameters.msVoice!="") {
-   // 	TeneoWebChat.call('set_ms_voice', response.output.parameters.msVoice );
-   // 	TeneoWebChat.call('set_locale',response.output.parameters.locale );
+   // 	TeneoWebWidget.call('set_ms_voice', response.output.parameters.msVoice );
+   // 	TeneoWebWidget.call('set_locale',response.output.parameters.locale );
    //     console.log("voice", response.output.parameters.msVoice); 	    
    //     console.log("locale", response.output.parameters.locale);
    // }
@@ -97,7 +97,7 @@ if(found) setTimeout(function(){
 	console.log('value: ' + value);
 	if(value==""){
 		var teneoMsg = { "text": "continue",  "silent": true };
-		TeneoWebChat.call('send_input', teneoMsg);
+		TeneoWebWidget.call('send_input', teneoMsg);
 		//document.getElementById("twc-user-input-field").value="Continue";
 		//found.click();
 		console.log('submitting');
@@ -112,7 +112,7 @@ if(found) setTimeout(function(){
     }*/
 }
 
-TeneoWebChat.on('engine_response', onEngineResponse);
+TeneoWebWidget.on('engine_response', onEngineResponse);
  
 
 
@@ -158,7 +158,7 @@ const fileUploader = {
     .then(function (json) {
         console.log(json.choices[0].message.content);
 	 var teneoMsg = { "text": "uploading",  "silent": true , "parameters" : {"payload": JSON.stringify(json.choices[0].message.content).substring(7) }};
-    	TeneoWebChat.call('send_input', teneoMsg);
+    	TeneoWebWidget.call('send_input', teneoMsg);
     })
 	   .catch(err => { 
              // handle errors 
@@ -166,7 +166,7 @@ const fileUploader = {
   
   
     //var teneoMsg = { "text": "uploading",  "silent": true , "parameters" : {"payload": item.imageUrl} };
-    TeneoWebChat.call('add_message', "Processing file.");
+    TeneoWebWidget.call('add_message', "Processing file.");
     console.log('submitting file upload');	  
   },
 
@@ -203,7 +203,7 @@ const fileUploader = {
 function doFileUpload(item) {
 
   // Adding the upload message with for the given file:
-  TeneoWebChat.call('add_message', {
+  TeneoWebWidget.call('add_message', {
     type: 'upload',
     author: 'user',
     data: {
@@ -220,7 +220,7 @@ function doFileUpload(item) {
   // Starting the file upload and setting dynamically the upload state for each file:
   fileUploader.uploadFile(item, {
     onSucceeded: () => {
-      TeneoWebChat.call('set_upload_state', {
+      TeneoWebWidget.call('set_upload_state', {
           itemId: item.id,
           uploadState: {
             status: 'SUCCEEDED'
@@ -228,7 +228,7 @@ function doFileUpload(item) {
       });
     },
     onFailed: () => {
-      TeneoWebChat.call('set_upload_state', {
+      TeneoWebWidget.call('set_upload_state', {
           itemId: item.id,
           uploadState: {
             status: 'FAILED',
@@ -237,7 +237,7 @@ function doFileUpload(item) {
       });
     },
     onInterrupted: () => {
-      TeneoWebChat.call('set_upload_state', {
+      TeneoWebWidget.call('set_upload_state', {
           itemId: item.id,
           uploadState: {
             status: 'INTERRUPTED',
@@ -246,7 +246,7 @@ function doFileUpload(item) {
       });
     },
     onUploadPercentageChanged: uploadPercentage => {
-      TeneoWebChat.call('set_upload_state', {
+      TeneoWebWidget.call('set_upload_state', {
           itemId: item.id,
           uploadState: {
             uploadPercentage: uploadPercentage
@@ -257,13 +257,13 @@ function doFileUpload(item) {
 }
 
 
-TeneoWebChat.on('upload_panel_submit', payload => {
+TeneoWebWidget.on('upload_panel_submit', payload => {
   payload.items.forEach(item => doFileUpload(item));
 });
 
 
-TeneoWebChat.on('upload_panel_cancel', payload => {
-  TeneoWebChat.call('add_message', {
+TeneoWebWidget.on('upload_panel_cancel', payload => {
+  TeneoWebWidget.call('add_message', {
       type: 'text',
       author: 'bot',
       data: { text: 'You have canceled on ' + payload.itemsCount + ' files' }
@@ -271,10 +271,10 @@ TeneoWebChat.on('upload_panel_cancel', payload => {
 });
 
 
-TeneoWebChat.on('upload_file_delete_clicked', payload => {
+TeneoWebWidget.on('upload_file_delete_clicked', payload => {
   fileUploader.deleteFile(payload.itemId, {
     onSucceeded: () => {
-      TeneoWebChat.call('set_upload_state', {
+      TeneoWebWidget.call('set_upload_state', {
         itemId: itemId,
         uploadState: {
           status: 'DELETED',
@@ -289,12 +289,12 @@ TeneoWebChat.on('upload_file_delete_clicked', payload => {
 });
 
 
-TeneoWebChat.on('upload_file_stop_clicked', payload => {
+TeneoWebWidget.on('upload_file_stop_clicked', payload => {
   fileUploader.interrupt(payload.itemId);
 });
 
 
-TeneoWebChat.on('reset', () => {
+TeneoWebWidget.on('reset', () => {
   fileUploader.interruptAll();
 });
 
