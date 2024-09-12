@@ -407,12 +407,12 @@ function watch_for_chat ()
 	        });
             }
         }
-	TeneoWebWidget.on('upload_panel_submit', payload => {
+	window.TeneoWebWidget.on('upload_panel_submit', payload => {
 	  payload.items.forEach(item => doFileUpload(item));
 	});
 	
 	
-	TeneoWebWidget.on('upload_panel_cancel', payload => {
+	window.TeneoWebWidget.on('upload_panel_cancel', payload => {
 	  TeneoWebWidget.call('add_message', {
 	      type: 'text',
 	      author: 'bot',
@@ -421,7 +421,7 @@ function watch_for_chat ()
 	});
 	
 	
-	TeneoWebWidget.on('upload_file_delete_clicked', payload => {
+	window.TeneoWebWidget.on('upload_file_delete_clicked', payload => {
 	  fileUploader.deleteFile(payload.itemId, {
 	    onSucceeded: () => {
 	      TeneoWebWidget.call('set_upload_state', {
@@ -439,12 +439,12 @@ function watch_for_chat ()
 	});
 	
 	
-	TeneoWebWidget.on('upload_file_stop_clicked', payload => {
+	window.TeneoWebWidget.on('upload_file_stop_clicked', payload => {
 	  fileUploader.interrupt(payload.itemId);
 	});
 	
 	
-	TeneoWebWidget.on('reset', () => {
+	window.TeneoWebWidget.on('reset', () => {
 	  fileUploader.interruptAll();
 	});
     </script>
