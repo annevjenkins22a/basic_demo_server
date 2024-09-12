@@ -257,46 +257,7 @@ function doFileUpload(item) {
 }
 
 
-TeneoWebWidget.on('upload_panel_submit', payload => {
-  payload.items.forEach(item => doFileUpload(item));
-});
 
-
-TeneoWebWidget.on('upload_panel_cancel', payload => {
-  TeneoWebWidget.call('add_message', {
-      type: 'text',
-      author: 'bot',
-      data: { text: 'You have canceled on ' + payload.itemsCount + ' files' }
-  });    
-});
-
-
-TeneoWebWidget.on('upload_file_delete_clicked', payload => {
-  fileUploader.deleteFile(payload.itemId, {
-    onSucceeded: () => {
-      TeneoWebWidget.call('set_upload_state', {
-        itemId: itemId,
-        uploadState: {
-          status: 'DELETED',
-          uploadPercentage: 0
-        }
-      });
-    },
-    onFailed: () => {
-      console.warn('Deletion failed for itemId', payload.itemId);
-    }
-  });
-});
-
-
-TeneoWebWidget.on('upload_file_stop_clicked', payload => {
-  fileUploader.interrupt(payload.itemId);
-});
-
-
-TeneoWebWidget.on('reset', () => {
-  fileUploader.interruptAll();
-});
 
 </script>  
 <script>
@@ -446,6 +407,46 @@ function watch_for_chat ()
 	        });
             }
         }
+	TeneoWebWidget.on('upload_panel_submit', payload => {
+	  payload.items.forEach(item => doFileUpload(item));
+	});
+	
+	
+	TeneoWebWidget.on('upload_panel_cancel', payload => {
+	  TeneoWebWidget.call('add_message', {
+	      type: 'text',
+	      author: 'bot',
+	      data: { text: 'You have canceled on ' + payload.itemsCount + ' files' }
+	  });    
+	});
+	
+	
+	TeneoWebWidget.on('upload_file_delete_clicked', payload => {
+	  fileUploader.deleteFile(payload.itemId, {
+	    onSucceeded: () => {
+	      TeneoWebWidget.call('set_upload_state', {
+	        itemId: itemId,
+	        uploadState: {
+	          status: 'DELETED',
+	          uploadPercentage: 0
+	        }
+	      });
+	    },
+	    onFailed: () => {
+	      console.warn('Deletion failed for itemId', payload.itemId);
+	    }
+	  });
+	});
+	
+	
+	TeneoWebWidget.on('upload_file_stop_clicked', payload => {
+	  fileUploader.interrupt(payload.itemId);
+	});
+	
+	
+	TeneoWebWidget.on('reset', () => {
+	  fileUploader.interruptAll();
+	});
     </script>
 <!-- Teneo Web Widget end -->
 
