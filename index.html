@@ -162,7 +162,7 @@ const fileUploader = {
 	  if(typeof item.imageUrl=="undefined") {
 		       var result = logBase64(item.file);
 		  	console.log(result);
-			while(result.Result=="undefined") {
+			while(typeof result.Result=="undefined") {
 				sleep(200);
 			}
 			result.then(function() {
