@@ -188,7 +188,11 @@ const fileUploader = {
 		       var result = logBase64(item.file);
     			while (typeof dataUrl=="undefined" || result=='')
 		        {
-		            await result;
+		           var start = async function(a, b) { 
+				  // Your async task will execute with await
+				 await result;
+				  console.log('I will execute after result gets either resolved/rejected')
+				} 
 		        }	
 	 }
 	 //else {
