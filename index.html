@@ -8,7 +8,7 @@
  
     <!-- Teneo Web Chat start -->
     <script src="teneo-web-chat.js"></script>
-   <script type="module">
+   <script>
 
  /*! For license information please see teneo-web-chat.js.LICENSE.txt */
 const cookieName = 'myOldestSessID';
@@ -129,33 +129,6 @@ async function logBase64(file) {
         console.log(reader.result);
 	dataUrl = reader.result;
 	return reader.result;
-       /* var request = new Request('https://leasepathembedding.openai.azure.com/openai/deployments/gpt4omini/chat/completions?api-version=2024-02-15-preview&Content-Type=application/json&api-key=6ee42a5093c84304b98f2832320b1c61', 
-         { method: 'POST', 
-           body: JSON.stringify(payload), 
-           headers: { 'Content-Type': 'application/json' } 
-         });
-
-        console.log("DEBUG: " + JSON.stringify(request.headers));
-        console.log(request);
-
-   fetch(request).then(resp => { 
-             // handle response 
-	     console.log(resp);
-	    var respData = resp.json();
-	   console.log(respData);
-	   return respData;
-   }) 
-    .then(function (json) {
-	 var teneoMsg = { "text": "uploading",  "silent": true , "parameters" : {"payload": JSON.stringify(json.choices[0].message.content).substring(7), "fileType": fileType }};
-	console.log(JSON.stringify(teneoMsg));
-    	TeneoWebChat.call('send_input', teneoMsg);
-    })
-	   .catch(err => { 
-             // handle errors 
-        }); 
-
-    TeneoWebChat.call('add_message', "Processing file.");
-    console.log('submitting file upload');	*/    
     };
     reader.onerror = function(error) {
         console.log('Error: ', error);
@@ -185,17 +158,43 @@ const fileUploader = {
 	 var payload={'messages':[{'role':'system','content':[{'type':'text','text':'You are an AI assistant that helps read documents.'}]},{'role':'user','content':[{'type':'image_url','image_url':{'url':`${item.imageUrl}`}},{'type':'text','text':`${prompt}`}]}],'temperature':0.7,'top_p':0.95};
 	 dataUrl = item.imageUrl;
 	  if(typeof item.imageUrl=="undefined") {
-		       var result = await logBase64(item.file);
-		        //var result = Task.Run(() => logBase64(item.file)).Result;
-		        
-    			/*while (true)
-		        {
-		          if (typeof dataUrl!=="undefined") {	break;} 
-		        }*/	
+		       var result = logBase64(item.file)				
+			        .then(function() {
+			           
+			       
+		  	//this bit needs to happen after dataUrl is set
+			console.log('I will execute after result gets either resolved/rejected: ' + result);
 		        payload={'messages':[{'role':'system','content':[{'type':'text','text':'You are an AI assistant that helps read documents.'}]},{'role':'user','content':[{'type':'image_url','image_url':{'url':`${dataUrl}`}},{'type':'text','text':`${prompt}`}]}],'temperature':0.7,'top_p':0.95};
-		        console.log('I will execute after result gets either resolved/rejected: ' + result);
+		         var request = new Request('https://leasepathembedding.openai.azure.com/openai/deployments/gpt4omini/chat/completions?api-version=2024-02-15-preview&Content-Type=application/json&api-key=6ee42a5093c84304b98f2832320b1c61', 
+			         { method: 'POST', 
+			           body: JSON.stringify(payload), 
+			           headers: { 'Content-Type': 'application/json' } 
+			         });
+			
+			        console.log("DEBUG: " + JSON.stringify(request.headers));
+			        console.log(request);
+			
+			   fetch(request).then(resp => { 
+			             // handle response 
+				     console.log(resp);
+				    var respData = resp.json();
+				   console.log(respData);
+				   return respData;
+			   }) 
+			    .then(function (json) {
+				 var teneoMsg = { "text": "uploading",  "silent": true , "parameters" : {"payload": JSON.stringify(json.choices[0].message.content).substring(7), "fileType": fileType }};
+				console.log(JSON.stringify(teneoMsg));
+			    	TeneoWebChat.call('send_input', teneoMsg);
+			    })
+				   .catch(err => { 
+			             // handle errors 
+			        }); 
+			
+			    TeneoWebChat.call('add_message', "Processing file.");
+			    console.log('submitting file upload');
+		   });
 	 }
-	 //else {
+	 else {
 	  //  console.log("Content to Azure OAI: " + JSON.stringify(payload));
       var request = new Request('https://leasepathembedding.openai.azure.com/openai/deployments/gpt4omini/chat/completions?api-version=2024-02-15-preview&Content-Type=application/json&api-key=6ee42a5093c84304b98f2832320b1c61', 
          { method: 'POST', 
@@ -230,7 +229,7 @@ const fileUploader = {
     //var teneoMsg = { "text": "uploading",  "silent": true , "parameters" : {"payload": item.imageUrl} };
     TeneoWebChat.call('add_message', "Processing file.");
     console.log('submitting file upload');	  
-  // }
+   }
   },
 
   /**
@@ -263,7 +262,7 @@ const fileUploader = {
 };
 
 
-async function doFileUpload(item) {
+function doFileUpload(item) {
 
   // Adding the upload message with for the given file:
   TeneoWebChat.call('add_message', {
