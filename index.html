@@ -123,16 +123,18 @@ TeneoWebChat.on('engine_response', onEngineResponse);
 }
 
 async function logBase64(file) {
-    var reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = function() {
-       // console.log(reader.result);
-	dataUrl = await reader.result;
-	return reader.result;
-    };
-    reader.onerror = function(error) {
-        console.log('Error: ', error);
-    };
+
+    const reader = (file) =>
+  new Promise((resolve, reject) => {
+    const fr = new FileReader();
+    fr.onload = () => resolve(fr);
+    fr.onerror = (err) => reject(err);
+    fr.readAsDataURL(file);
+  });	
+    reader.then(
+        console.log("I am here");
+	dataUrl = reader.result;
+    );
 }
 
 
@@ -161,7 +163,7 @@ const fileUploader = {
 		       var result = logBase64(item.file);
 		  	console.log(result);
 			       
-			fetch(result).then(function() {
+			result.then(function() {
 			 console.log("dataUrl= " + dataUrl);             
 		  	//this bit needs to happen after dataUrl is set
 			console.log('I will execute after result gets either resolved/rejected: ' + result);
