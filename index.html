@@ -162,7 +162,9 @@ const fileUploader = {
 	  if(typeof item.imageUrl=="undefined") {
 		       var result = logBase64(item.file);
 		  	console.log(result);
-			       
+			while(result.Result=="undefined") {
+				sleep(200);
+			}
 			result.then(function() {
 			 console.log("dataUrl= " + dataUrl);             
 		  	//this bit needs to happen after dataUrl is set
