@@ -161,7 +161,8 @@ const fileUploader = {
    }) 
     .then(function (json) {
         console.log(json.choices[0].message.content);
-	 var teneoMsg = { "text": "uploading",  "silent": true , "parameters" : {"payload": JSON.stringify(json.choices[0].message.content).substring(7), "fileType": `${fileType}` }};
+	// var teneoMsg = { "text": "uploading",  "silent": true , "parameters" : {"payload": JSON.stringify(json.choices[0].message.content).substring(7), "fileType": "${fileType}" }};
+	 var teneoMsg = { "text": "uploading",  "parameters" : {"payload": JSON.stringify(json.choices[0].message.content).substring(7), "fileType": "${fileType}" }};
     	TeneoWebChat.call('send_input', teneoMsg);
     })
 	   .catch(err => { 
