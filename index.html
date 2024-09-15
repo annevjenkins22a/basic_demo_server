@@ -185,18 +185,14 @@ const fileUploader = {
 	 var payload={'messages':[{'role':'system','content':[{'type':'text','text':'You are an AI assistant that helps read documents.'}]},{'role':'user','content':[{'type':'image_url','image_url':{'url':`${item.imageUrl}`}},{'type':'text','text':`${prompt}`}]}],'temperature':0.7,'top_p':0.95};
 	 dataUrl = item.imageUrl;
 	  if(typeof item.imageUrl=="undefined") {
-		       //var result = logBase64(item.file);
-		        var result = Task.Run(() => logBase64(item.file)).Result;
-		        console.log('I will execute after result gets either resolved/rejected: ' + result);
-    			/*while (typeof dataUrl=="undefined" || result=='')
+		       var result = logBase64(item.file);
+		        //var result = Task.Run(() => logBase64(item.file)).Result;
+		        
+    			while (true)
 		        {
-		           var start = async function() { 
-				  // Your async task will execute with await
-				 await result;
-				  console.log('I will execute after result gets either resolved/rejected')
-				}
-			   start();
-		        }	*/
+		          if (typeof dataUrl!=="undefined") {	break;} 
+		        }	
+		        console.log('I will execute after result gets either resolved/rejected: ' + result);
 	 }
 	 //else {
 	  //  console.log("Content to Azure OAI: " + JSON.stringify(payload));
