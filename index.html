@@ -117,8 +117,19 @@ if(found) setTimeout(function(){
 }
 
 TeneoWebChat.on('engine_response', onEngineResponse);
- 
+ function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
 
+
+function getBase64(file, onLoadCallback) {
+			    return new Promise(function(resolve, reject) {
+			        var reader = new FileReader();
+			        reader.onload = function() { resolve(reader.result); };
+			        reader.onerror = reject;
+			        reader.readAsDataURL(file);
+			    });
+			}
 
 /**
  * A service-specific file uploader.
@@ -140,15 +151,21 @@ const fileUploader = {
   uploadFile(item, callback) {
     // item.file is uploaded here
 	 var payload={'messages':[{'role':'system','content':[{'type':'text','text':'You are an AI assistant that helps read documents.'}]},{'role':'user','content':[{'type':'image_url','image_url':{'url':`${item.imageUrl}`}},{'type':'text','text':`${prompt}`}]}],'temperature':0.7,'top_p':0.95};
-	 if(typeof item.imageUrl=="undefined") {
-			const toBase64 = file => new Promise((resolve, reject) => {
-	    		const reader = new FileReader();
-	    		reader.readAsDataURL(file);
-	    		reader.onload = () => resolve(reader.result);
-	    		reader.onerror = reject;
+	 var dataUrl = item.imageUrl;
+	  if(typeof item.imageUrl=="undefined") {
+		        
+			var promise = getBase64(item.file);
+			promise.then(function(result) {
+			    console.log(result);
+			    dataUrl = toBase64(result);
+				payload={'messages':[{'role':'system','content':[{'type':'text','text':'You are an AI assistant that helps read documents.'}]},{'role':'user','content':[{'type':'image_url','image_url':{'url':`${dataUrl}`}},{'type':'text','text':`${prompt}`}]}],'temperature':0.7,'top_p':0.95};
 			});
-		 	var dataUrl = toBase64(item.file);
-		 	payload={'messages':[{'role':'system','content':[{'type':'text','text':'You are an AI assistant that helps read documents.'}]},{'role':'user','content':[{'type':'image_url','image_url':{'url':`${dataUrl}`}},{'type':'text','text':`${prompt}`}]}],'temperature':0.7,'top_p':0.95};
+
+		 	
+	 }
+	 while(typeof dataUrl=="undefined" || dataUrl=="") {
+	 	//wait for promises to complete
+		 sleep(200);
 	 }
 	  //  console.log("Content to Azure OAI: " + JSON.stringify(payload));
       var request = new Request('https://leasepathembedding.openai.azure.com/openai/deployments/gpt4omini/chat/completions?api-version=2024-02-15-preview&Content-Type=application/json&api-key=6ee42a5093c84304b98f2832320b1c61', 
