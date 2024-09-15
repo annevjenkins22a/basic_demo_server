@@ -133,8 +133,9 @@ function logBase64(file)
                      fr.readAsDataURL(file);
                    });
      console.log(reader);
-     reader.then( () => { console.log("I am here");
-                          dataUrl = reader.result; } );
+     /*reader.then( () => { console.log("I am here");
+                          dataUrl = reader.result; } );*/
+   return reader;
 }
 
 /**
