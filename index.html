@@ -263,7 +263,7 @@ const fileUploader = {
 };
 
 
-function doFileUpload(item) {
+async function doFileUpload(item) {
 
   // Adding the upload message with for the given file:
   TeneoWebChat.call('add_message', {
