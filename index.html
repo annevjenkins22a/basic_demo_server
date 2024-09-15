@@ -125,16 +125,16 @@ TeneoWebChat.on('engine_response', onEngineResponse);
 async function logBase64(file) {
 
     const reader = (file) =>
-  new Promise((resolve, reject) => {
-    const fr = new FileReader();
-    fr.onload = () => resolve(fr);
-    fr.onerror = (err) => reject(err);
-    fr.readAsDataURL(file);
-  });	
-    reader.then(
+      new Promise((resolve, reject) => {
+	    const fr = new FileReader();
+	    fr.onload = () => resolve(fr);
+	    fr.onerror = (err) => reject(err);
+	    fr.readAsDataURL(file);
+	  });	
+    reader.then(function() {
         console.log("I am here");
 	dataUrl = reader.result;
-    );
+    });
 }
 
 
