@@ -12,6 +12,7 @@
 
  /*! For license information please see teneo-web-chat.js.LICENSE.txt */
 const cookieName = 'myOldestSessID';
+var prompt = '';
 	
  window.onload = function () {
     watch_for_chat();
@@ -61,16 +62,17 @@ function getCookie(name) {
     var response = payload.responseDetails;
    if(response.output.parameters.UploadImage && response.output.parameters.UploadImage=='Y') {
       TeneoWebChat.call('show_upload_panel');	
+      prompt = response.output.parameters.prompt;
    }
    else {
 	TeneoWebChat.call('hide_upload_panel');	 
    }
-   // if(response.output.parameters.msVoice && response.output.parameters.msVoice!="") {
-   // 	TeneoWebChat.call('set_ms_voice', response.output.parameters.msVoice );
-   // 	TeneoWebChat.call('set_locale',response.output.parameters.locale );
-   //     console.log("voice", response.output.parameters.msVoice); 	    
-   //     console.log("locale", response.output.parameters.locale);
-   // }
+    if(response.output.parameters.msVoice && response.output.parameters.msVoice!="") {
+    	TeneoWebChat.call('set_ms_voice', response.output.parameters.msVoice );
+    	TeneoWebChat.call('set_locale',response.output.parameters.locale );
+        console.log("voice", response.output.parameters.msVoice); 	    
+        console.log("locale", response.output.parameters.locale);
+    }
     var sessionId = response.sessionId;
     
     var cookieCheck = `${getCookie(cookieName)}`;
@@ -134,8 +136,8 @@ const fileUploader = {
    */
   uploadFile(item, callback) {
     // item.file is uploaded here
-	 var payload={'messages':[{'role':'system','content':[{'type':'text','text':'You are an AI assistant that helps people find information.'}]},{'role':'user','content':[{'type':'image_url','image_url':{'url':`${item.imageUrl}`}},{'type':'text','text':'Please read and return the information on this image in JSON format with the following fields: first_name, last_name, date_of_birth, country, issue_date, issuing_authority, expiry_date, license_number, street, city, postal_code, category'}]}],'temperature':0.7,'top_p':0.95};
-       console.log("Content to Azure OAI: " + JSON.stringify(payload));
+	 var payload={'messages':[{'role':'system','content':[{'type':'text','text':'You are an AI assistant that helps read documents.'}]},{'role':'user','content':[{'type':'image_url','image_url':{'url':`${item.imageUrl}`}},{'type':'text','text':`${prompt}`}]}],'temperature':0.7,'top_p':0.95};
+	  console.log("Content to Azure OAI: " + JSON.stringify(payload));
       var request = new Request('https://leasepathembedding.openai.azure.com/openai/deployments/gpt4omini/chat/completions?api-version=2024-02-15-preview&Content-Type=application/json&api-key=6ee42a5093c84304b98f2832320b1c61', 
          { method: 'POST', 
            body: JSON.stringify(payload), 
