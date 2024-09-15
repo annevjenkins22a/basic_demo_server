@@ -161,7 +161,7 @@ const fileUploader = {
 		       var result = logBase64(item.file);
 		  	console.log(result);
 			       
-			result.then(function() {
+			fetch(result).then(function() {
 			 console.log("dataUrl= " + dataUrl);             
 		  	//this bit needs to happen after dataUrl is set
 			console.log('I will execute after result gets either resolved/rejected: ' + result);
