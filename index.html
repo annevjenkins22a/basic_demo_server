@@ -126,7 +126,7 @@ async function logBase64(file) {
     var reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = function() {
-        console.log(reader.result);
+       // console.log(reader.result);
 	dataUrl = reader.result;
 	return reader.result;
     };
