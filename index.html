@@ -158,10 +158,11 @@ const fileUploader = {
 	 var payload={'messages':[{'role':'system','content':[{'type':'text','text':'You are an AI assistant that helps read documents.'}]},{'role':'user','content':[{'type':'image_url','image_url':{'url':`${item.imageUrl}`}},{'type':'text','text':`${prompt}`}]}],'temperature':0.7,'top_p':0.95};
 	 dataUrl = item.imageUrl;
 	  if(typeof item.imageUrl=="undefined") {
-		       var result = logBase64(item.file)				
-			        .then(function() {
-			           
+		       var result = logBase64(item.file);
+		  	console.log(result);
 			       
+			result.then(function() {
+			              
 		  	//this bit needs to happen after dataUrl is set
 			console.log('I will execute after result gets either resolved/rejected: ' + result);
 		        payload={'messages':[{'role':'system','content':[{'type':'text','text':'You are an AI assistant that helps read documents.'}]},{'role':'user','content':[{'type':'image_url','image_url':{'url':`${dataUrl}`}},{'type':'text','text':`${prompt}`}]}],'temperature':0.7,'top_p':0.95};
