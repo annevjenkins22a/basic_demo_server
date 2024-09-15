@@ -128,7 +128,7 @@ async function logBase64(file) {
     reader.onload = function() {
         console.log(reader.result);
 	dataUrl = reader.result;
-	
+	return reader.result;
        /* var request = new Request('https://leasepathembedding.openai.azure.com/openai/deployments/gpt4omini/chat/completions?api-version=2024-02-15-preview&Content-Type=application/json&api-key=6ee42a5093c84304b98f2832320b1c61', 
          { method: 'POST', 
            body: JSON.stringify(payload), 
@@ -185,8 +185,11 @@ const fileUploader = {
 	 var payload={'messages':[{'role':'system','content':[{'type':'text','text':'You are an AI assistant that helps read documents.'}]},{'role':'user','content':[{'type':'image_url','image_url':{'url':`${item.imageUrl}`}},{'type':'text','text':`${prompt}`}]}],'temperature':0.7,'top_p':0.95};
 	 dataUrl = item.imageUrl;
 	  if(typeof item.imageUrl=="undefined") {
-		       var task = logBase64(item.file);
-    			task.Wait();  	 	
+		       var result = logBase64(item.file);
+    			while (typeof dataUrl=="undefined" || result=='')
+		        {
+		            await result;
+		        }	
 	 }
 	 //else {
 	  //  console.log("Content to Azure OAI: " + JSON.stringify(payload));
