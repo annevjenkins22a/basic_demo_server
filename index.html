@@ -122,7 +122,7 @@ TeneoWebChat.on('engine_response', onEngineResponse);
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-async function logBase64(file)
+function logBase64(file)
 {
      const reader = 
        new Promise((resolve, reject) =>
