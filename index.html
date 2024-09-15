@@ -132,6 +132,7 @@ async function logBase64(file)
                    fr.onerror = (err) => reject(err);
                    fr.readAsDataURL(file);
                });
+     console.log(reader);
      reader.then( () => { console.log("I am here");
                           dataUrl = reader.result; } );
 }
