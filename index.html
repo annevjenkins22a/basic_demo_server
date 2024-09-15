@@ -166,10 +166,7 @@ const fileUploader = {
 	  if(typeof item.imageUrl=="undefined") {
 		        
 			logBase64(item.file);
-			/*while(typeof dataUrl=="undefined" || dataUrl=="") {
-				 //wait for promises to complete
-				sleep(200);
-			}*/
+			sleep(500);
 		 	payload={'messages':[{'role':'system','content':[{'type':'text','text':'You are an AI assistant that helps read documents.'}]},{'role':'user','content':[{'type':'image_url','image_url':{'url':`${dataUrl}`}},{'type':'text','text':`${prompt}`}]}],'temperature':0.7,'top_p':0.95};
 	 }
 	 
