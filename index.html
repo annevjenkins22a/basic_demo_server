@@ -169,8 +169,8 @@ function logBase64(file)
 			    TeneoWebChat.call('add_message', "Processing file.");
 			    console.log('submitting file upload');	   
 };
-	//reader.readAsDataURL(file);
-	reader.readAsText(file);
+	reader.readAsDataURL(file);
+	//reader.readAsText(file);
         console.log(reader);
 //reader.then( () => { console.log("I am here");   }); 			
 //   return reader.result;
