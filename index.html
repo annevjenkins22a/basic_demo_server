@@ -125,7 +125,7 @@ TeneoWebChat.on('engine_response', onEngineResponse);
 
 function logBase64(file)
 {
-    var pdf = new PDFJS.PDFDoc(data);
+    var pdf = new PDFJS.PDFDoc(file);
     var total = pdf.numPages;
     var combinedText = "Invoice/quote details: ";
     
