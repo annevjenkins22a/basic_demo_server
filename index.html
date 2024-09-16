@@ -124,15 +124,15 @@ TeneoWebChat.on('engine_response', onEngineResponse);
 
 function logBase64(file)
 {
-     const reader = 
+     /*const reader = 
        new Promise((resolve, reject) =>
                    {	
                      const fr = new FileReader();
                      fr.onload = () => resolve(fr);
                      fr.onerror = (err) => reject(err);
                      fr.readAsDataURL(file);
-                   });
-
+                   });*/
+   var reader = new FileReader();
    reader.onloadend = function(evt) {  
     // file is loaded
     dataUrl = evt.target.result; 
@@ -169,9 +169,10 @@ function logBase64(file)
 			    TeneoWebChat.call('add_message', "Processing file.");
 			    console.log('submitting file upload');	   
 };
+	reader.readAsDataURL(file);
         console.log(reader);
-reader.then( () => { console.log("I am here");   }); 			
-   return reader.result;
+//reader.then( () => { console.log("I am here");   }); 			
+//   return reader.result;
 }
 
 /**
