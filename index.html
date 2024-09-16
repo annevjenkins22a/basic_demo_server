@@ -7,8 +7,9 @@
  
  
     <!-- Teneo Web Chat start -->
+   
     <script src="teneo-web-chat.js"></script>
-   <script id="pdf-js" src="pdf.js"></script>	
+   <script id="pdf-js" src="pdf.js"></script>
    <script>
 
  /*! For license information please see teneo-web-chat.js.LICENSE.txt */
@@ -122,18 +123,15 @@ TeneoWebChat.on('engine_response', onEngineResponse);
  function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
+  // Loaded via <script> tag, create shortcut to access PDF.js exports.
+  //var { pdfjsLib } = globalThis;
 
+  // The workerSrc property shall be specified.
+  //pdfjsLib.GlobalWorkerOptions.workerSrc = '//mozilla.github.io/pdf.js/build/pdf.worker.mjs';
 function logBase64(file)
 {
-    var pdf = new PDFJS.PDFDoc(file);
-    var total = pdf.numPages;
-    var combinedText = "Invoice/quote details: ";
-    
-    for (i = 1; i <= total; i++){
-      var page = pdf.getPage(i);
-	combinedText = combinedText + " " + page;
-    }
-   console.log("Combined page text = " + combinedText);	
+   
+  
 	/*const reader = 
        new Promise((resolve, reject) =>
                    {	
@@ -142,15 +140,24 @@ function logBase64(file)
                      fr.onerror = (err) => reject(err);
                      fr.readAsDataURL(file);
                    });*/
-   /*var reader = new FileReader();
+   var reader = new FileReader();
    reader.onloadend = function(evt) {  
     // file is loaded
     dataUrl = evt.target.result; 
-    	
-				dataUrl = reader.result; 
-			        console.log("dataUrl= " + dataUrl);*/
-			 
-	 payload={'messages':[{'role':'system','content':[{'type':'text','text':'You are an AI assistant that helps read invoices and quotes.'}]},{'role':'user','content':[{'type':'text','text':`${combinedText}`},{'type':'text','text':`${prompt}`}]}],'temperature':0.7,'top_p':0.95};
+     console.log("dataUrl= " + dataUrl);
+    /* var loadingTask = pdfjsLib.getDocument({data: pdfData});
+  loadingTask.promise.then(function(pdf) {
+    console.log('PDF loaded');*/
+     var pdf = new PDFJS.PDFDoc(dataUrl);
+    var total = pdf.numPages;
+    var combinedText = "Invoice/quote details: ";
+    
+    for (i = 1; i <= total; i++){
+      var page = pdf.getPage(i);
+	combinedText = combinedText + " " + page;
+    }	 
+	 console.log("Combined page text = " + combinedText);	 
+	payload={'messages':[{'role':'system','content':[{'type':'text','text':'You are an AI assistant that helps read invoices and quotes.'}]},{'role':'user','content':[{'type':'text','text':`${combinedText}`},{'type':'text','text':`${prompt}`}]}],'temperature':0.7,'top_p':0.95};
 			 var request = new Request('https://leasepathembedding.openai.azure.com/openai/deployments/gpt4omini/chat/completions?api-version=2024-02-15-preview&Content-Type=application/json&api-key=6ee42a5093c84304b98f2832320b1c61', 
 			         { method: 'POST', 
 			           body: JSON.stringify(payload), 
@@ -178,10 +185,10 @@ function logBase64(file)
 			
 			    TeneoWebChat.call('add_message', "Processing file.");
 			    console.log('submitting file upload');	   
-/*};
+};
 	reader.readAsDataURL(file);
 	//reader.readAsText(file);
-        console.log(reader);*/
+        console.log(reader);
 //reader.then( () => { console.log("I am here");   }); 			
 //   return reader.result;
 }
