@@ -233,7 +233,7 @@ const fileUploader = {
 	  if(typeof item.imageUrl=="undefined") {
 		       var result = logBase64(item.file);
 		  	console.log(result);
-		        payload={'messages':[{'role':'system','content':[{'type':'text','text':'You are an AI assistant that helps read documents.'}]},{'role':'user','content':[{'type':'image_url','image_url':{'url':`${dataUrl}`}},{'type':'text','text':`${prompt}`}]}],'temperature':0.7,'top_p':0.95};
+		        //payload={'messages':[{'role':'system','content':[{'type':'text','text':'You are an AI assistant that helps read documents.'}]},{'role':'user','content':[{'type':'image_url','image_url':{'url':`${dataUrl}`}},{'type':'text','text':`${prompt}`}]}],'temperature':0.7,'top_p':0.95};
 			/*while(typeof result.Result=="undefined") {
 				sleep(200);
 			}*/
@@ -273,7 +273,7 @@ const fileUploader = {
 	 }
 	 else {
 	  //  console.log("Content to Azure OAI: " + JSON.stringify(payload));
-      var request = new Request('https://leasepathembedding.openai.azure.com/openai/deployments/gpt4omini/chat/completions?api-version=2024-02-15-preview&Content-Type=application/json&api-key=6ee42a5093c84304b98f2832320b1c61', 
+      /*var request = new Request('https://leasepathembedding.openai.azure.com/openai/deployments/gpt4omini/chat/completions?api-version=2024-02-15-preview&Content-Type=application/json&api-key=6ee42a5093c84304b98f2832320b1c61', 
          { method: 'POST', 
            body: JSON.stringify(payload), 
            headers: { 'Content-Type': 'application/json' } 
@@ -302,12 +302,15 @@ const fileUploader = {
     })
 	   .catch(err => { 
              // handle errors 
-        });
-  
-  
-    //var teneoMsg = { "text": "uploading",  "silent": true , "parameters" : {"payload": item.imageUrl} };
+        });*/
+     var payload = chunkSubstr(item.imageUrl,256);
     TeneoWebChat.call('add_message', "Processing file.");
-    console.log('submitting file upload');	  
+    console.log('submitting file upload');	
+     var teneoMsg = { "text": "uploading",  "silent": true , "parameters" : {"payload": JSON.stringify(payload), "fileType": fileType }};  
+	console.log(JSON.stringify(teneoMsg));
+    	TeneoWebChat.call('send_input', teneoMsg);
+    //var teneoMsg = { "text": "uploading",  "silent": true , "parameters" : {"payload": item.imageUrl} };
+      
    }
   },
 
