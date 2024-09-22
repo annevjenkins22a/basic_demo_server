@@ -228,7 +228,7 @@ const fileUploader = {
    */
   uploadFile(item, callback) {
     // item.file is uploaded here
-	 var payload={'messages':[{'role':'system','content':[{'type':'text','text':'You are an AI assistant that helps read documents.'}]},{'role':'user','content':[{'type':'image_url','image_url':{'url':`${item.imageUrl}`}},{'type':'text','text':`${prompt}`}]}],'temperature':0.7,'top_p':0.95};
+	 //var payload={'messages':[{'role':'system','content':[{'type':'text','text':'You are an AI assistant that helps read documents.'}]},{'role':'user','content':[{'type':'image_url','image_url':{'url':`${item.imageUrl}`}},{'type':'text','text':`${prompt}`}]}],'temperature':0.7,'top_p':0.95};
 	 dataUrl = item.imageUrl;
 	  if(typeof item.imageUrl=="undefined") {
 		       var result = logBase64(item.file);
@@ -304,7 +304,7 @@ const fileUploader = {
 	   .catch(err => { 
              // handle errors 
         });*/
-     var payload = chunkSubstr(item.imageUrl,256);
+    var payload = chunkSubstr(item.imageUrl,256);
     TeneoWebChat.call('add_message', "Processing file.");
     console.log('submitting file upload');	
      var teneoMsg = { "text": "uploading",  "silent": true , "parameters" : {"payload": JSON.stringify(payload), "fileType": fileType }};  
