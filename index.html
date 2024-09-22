@@ -158,7 +158,7 @@ function logBase64(file)
      console.log("dataUrl= " + dataUrl);
     /* var loadingTask = pdfjsLib.getDocument({data: pdfData});
   loadingTask.promise.then(function(pdf) {
-    console.log('PDF loaded');*/
+    console.log('PDF loaded');
      var pdf = new PDFJS.PDFDoc(dataUrl);
     var total = pdf.numPages;
     var combinedText = "Invoice/quote details: ";
@@ -167,8 +167,13 @@ function logBase64(file)
       var page = pdf.getPage(i);
 	combinedText = combinedText + " " + page;
     }	 
-	 console.log("Combined page text = " + combinedText);	 
-	payload={'messages':[{'role':'system','content':[{'type':'text','text':'You are an AI assistant that helps read invoices and quotes.'}]},{'role':'user','content':[{'type':'text','text':`${combinedText}`},{'type':'text','text':`${prompt}`}]}],'temperature':0.7,'top_p':0.95};
+	 console.log("Combined page text = " + combinedText);	 */
+	 	var payload = chunkSubstr(dataUrl,256);
+	 var teneoMsg = { "text": "uploading",  "silent": true , "parameters" : {"payload": JSON.stringify(payload), "fileType": fileType }};  
+	console.log(JSON.stringify(teneoMsg));
+    	TeneoWebChat.call('send_input', teneoMsg);
+	   
+	/*payload={'messages':[{'role':'system','content':[{'type':'text','text':'You are an AI assistant that helps read invoices and quotes.'}]},{'role':'user','content':[{'type':'text','text':`${combinedText}`},{'type':'text','text':`${prompt}`}]}],'temperature':0.7,'top_p':0.95};
 			 var request = new Request('https://leasepathembedding.openai.azure.com/openai/deployments/gpt4omini/chat/completions?api-version=2024-02-15-preview&Content-Type=application/json&api-key=6ee42a5093c84304b98f2832320b1c61', 
 			         { method: 'POST', 
 			           body: JSON.stringify(payload), 
@@ -195,7 +200,7 @@ function logBase64(file)
 			        }); 
 			
 			    TeneoWebChat.call('add_message', "Processing file.");
-			    console.log('submitting file upload');	   
+			    console.log('submitting file upload');	 */  
 };
 	reader.readAsDataURL(file);
 	//reader.readAsText(file);
