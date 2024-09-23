@@ -142,71 +142,21 @@ TeneoWebChat.on('engine_response', onEngineResponse);
 function logBase64(file)
 {
    
-  
-	/*const reader = 
-       new Promise((resolve, reject) =>
-                   {	
-                     const fr = new FileReader();
-                     fr.onload = () => resolve(fr);
-                     fr.onerror = (err) => reject(err);
-                     fr.readAsDataURL(file);
-                   });*/
+
    var reader = new FileReader();
    reader.onloadend = function(evt) {  
     // file is loaded
     dataUrl = evt.target.result; 
      console.log("dataUrl= " + dataUrl);
-    /* var loadingTask = pdfjsLib.getDocument({data: pdfData});
-  loadingTask.promise.then(function(pdf) {
-    console.log('PDF loaded');
-     var pdf = new PDFJS.PDFDoc(dataUrl);
-    var total = pdf.numPages;
-    var combinedText = "Invoice/quote details: ";
-    
-    for (i = 1; i <= total; i++){
-      var page = pdf.getPage(i);
-	combinedText = combinedText + " " + page;
-    }	 
-	 console.log("Combined page text = " + combinedText);	 */
-	 	var payload = chunkSubstr(dataUrl,256);
+ 	var payload = chunkSubstr(dataUrl,1000);
 	 var teneoMsg = { "text": "uploading",  "silent": true , "parameters" : {"payload": JSON.stringify(payload), "fileType": fileType }};  
 	console.log(JSON.stringify(teneoMsg));
     	TeneoWebChat.call('send_input', teneoMsg);
 	   
-	/*payload={'messages':[{'role':'system','content':[{'type':'text','text':'You are an AI assistant that helps read invoices and quotes.'}]},{'role':'user','content':[{'type':'text','text':`${combinedText}`},{'type':'text','text':`${prompt}`}]}],'temperature':0.7,'top_p':0.95};
-			 var request = new Request('https://leasepathembedding.openai.azure.com/openai/deployments/gpt4omini/chat/completions?api-version=2024-02-15-preview&Content-Type=application/json&api-key=6ee42a5093c84304b98f2832320b1c61', 
-			         { method: 'POST', 
-			           body: JSON.stringify(payload), 
-			           headers: { 'Content-Type': 'application/json' } 
-			         });
-			
-			        console.log("DEBUG: " + JSON.stringify(request.headers));
-			        console.log(request);
-			
-			   fetch(request).then(resp => { 
-			             // handle response 
-				     console.log(resp);
-				    var respData = resp.json();
-				   console.log(respData);
-				   return respData;
-			   }) 
-			    .then(function (json) {
-				 var teneoMsg = { "text": "uploading",  "silent": true , "parameters" : {"payload": JSON.stringify(json.choices[0].message.content).substring(7), "fileType": fileType }};
-				console.log(JSON.stringify(teneoMsg));
-			    	TeneoWebChat.call('send_input', teneoMsg);
-			    })
-				   .catch(err => { 
-			             // handle errors 
-			        }); 
-			
-			    TeneoWebChat.call('add_message', "Processing file.");
-			    console.log('submitting file upload');	 */  
 };
 	reader.readAsDataURL(file);
-	//reader.readAsText(file);
         console.log(reader);
-//reader.then( () => { console.log("I am here");   }); 			
-//   return reader.result;
+
 }
 
 /**
@@ -228,89 +178,23 @@ const fileUploader = {
    */
   uploadFile(item, callback) {
     // item.file is uploaded here
-	 //var payload={'messages':[{'role':'system','content':[{'type':'text','text':'You are an AI assistant that helps read documents.'}]},{'role':'user','content':[{'type':'image_url','image_url':{'url':`${item.imageUrl}`}},{'type':'text','text':`${prompt}`}]}],'temperature':0.7,'top_p':0.95};
+	
 	 dataUrl = item.imageUrl;
 	  if(typeof item.imageUrl=="undefined") {
 		       var result = logBase64(item.file);
-		  	console.log(result);
-		        //payload={'messages':[{'role':'system','content':[{'type':'text','text':'You are an AI assistant that helps read documents.'}]},{'role':'user','content':[{'type':'image_url','image_url':{'url':`${dataUrl}`}},{'type':'text','text':`${prompt}`}]}],'temperature':0.7,'top_p':0.95};
-			/*while(typeof result.Result=="undefined") {
-				sleep(200);
-			}*/
-			/*result.then(function() {
-			 console.log("dataUrl= " + dataUrl);             
-		  	//this bit needs to happen after dataUrl is set
-			console.log('I will execute after result gets either resolved/rejected: ' + result);
-		        
-		         var request = new Request('https://leasepathembedding.openai.azure.com/openai/deployments/gpt4omini/chat/completions?api-version=2024-02-15-preview&Content-Type=application/json&api-key=6ee42a5093c84304b98f2832320b1c61', 
-			         { method: 'POST', 
-			           body: JSON.stringify(payload), 
-			           headers: { 'Content-Type': 'application/json' } 
-			         });
-			
-			        console.log("DEBUG: " + JSON.stringify(request.headers));
-			        console.log(request);
-			
-			   fetch(request).then(resp => { 
-			             // handle response 
-				     console.log(resp);
-				    var respData = resp.json();
-				   console.log(respData);
-				   return respData;
-			   }) 
-			    .then(function (json) {
-				 var teneoMsg = { "text": "uploading",  "silent": true , "parameters" : {"payload": JSON.stringify(json.choices[0].message.content).substring(7), "fileType": fileType }};
-				console.log(JSON.stringify(teneoMsg));
-			    	TeneoWebChat.call('send_input', teneoMsg);
-			    })
-				   .catch(err => { 
-			             // handle errors 
-			        }); 
-			
-			    TeneoWebChat.call('add_message', "Processing file.");
-			    console.log('submitting file upload');
-		   });*/
+	        
 	 }
 	 else {
-	 console.log("dataUrl= " + dataUrl);    	 
+	// console.log("dataUrl= " + dataUrl);    	 
 	  //  console.log("Content to Azure OAI: " + JSON.stringify(payload));
-      /*var request = new Request('https://leasepathembedding.openai.azure.com/openai/deployments/gpt4omini/chat/completions?api-version=2024-02-15-preview&Content-Type=application/json&api-key=6ee42a5093c84304b98f2832320b1c61', 
-         { method: 'POST', 
-           body: JSON.stringify(payload), 
-           headers: { 'Content-Type': 'application/json' } 
-         });
 
-        console.log("DEBUG: " + JSON.stringify(request.headers));
-       console.log(request);
-      
-       // Now use it! 
-
-   fetch(request).then(resp => { 
-             // handle response 
-	     console.log(resp);
-	    var respData = resp.json();
-	   console.log(respData);
-	   return respData;
-   }) 
-    .then(function (json) {
-        //console.log(json.choices[0].message.content);
-	var payload = chunkSubstr(item.imageUrl,256);
-	 var teneoMsg = { "text": "uploading",  "silent": true , "parameters" : {"payload": JSON.stringify(payload), "fileType": fileType }};
-	    // var teneoMsg = { "text": "uploading",  "silent": true , "parameters" : {"payload": JSON.stringify(json.choices[0].message.content).substring(7), "fileType": fileType }};
-	 //var teneoMsg = { "text": "uploading",  "parameters" : {"payload": JSON.stringify(json.choices[0].message.content).substring(7), "fileType": fileType }};
-	console.log(JSON.stringify(teneoMsg));
-    	TeneoWebChat.call('send_input', teneoMsg);
-    })
-	   .catch(err => { 
-             // handle errors 
-        });*/
-    var payload = chunkSubstr(item.imageUrl,256);
+    var payload = chunkSubstr(item.imageUrl,1000);
     TeneoWebChat.call('add_message', "Processing file.");
     console.log('submitting file upload');	
      var teneoMsg = { "text": "uploading",  "silent": true , "parameters" : {"payload": JSON.stringify(payload), "fileType": fileType }};  
-	console.log(JSON.stringify(teneoMsg));
+	//console.log(JSON.stringify(teneoMsg));
     	TeneoWebChat.call('send_input', teneoMsg);
-    //var teneoMsg = { "text": "uploading",  "silent": true , "parameters" : {"payload": item.imageUrl} };
+  
       
    }
   },
