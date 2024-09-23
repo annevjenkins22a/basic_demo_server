@@ -192,7 +192,7 @@ const fileUploader = {
     TeneoWebChat.call('add_message', "Processing file.");
     console.log('submitting file upload');	
      var teneoMsg = { "text": "uploading",  "silent": true , "parameters" : {"payload": JSON.stringify(payload), "fileType": fileType }};  
-	//console.log(JSON.stringify(teneoMsg));
+	console.log(JSON.stringify(teneoMsg));
     	TeneoWebChat.call('send_input', teneoMsg);
   
       
