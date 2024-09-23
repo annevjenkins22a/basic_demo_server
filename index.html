@@ -148,7 +148,7 @@ function logBase64(file)
     // file is loaded
     dataUrl = evt.target.result; 
      console.log("dataUrl= " + dataUrl);
- 	var payload = chunkSubstr(dataUrl,1000);
+ 	var payload = chunkSubstr(dataUrl,500);
 	 var teneoMsg = { "text": "uploading",  "silent": true , "parameters" : {"payload": JSON.stringify(payload), "fileType": fileType }};  
 	console.log(JSON.stringify(teneoMsg));
     	TeneoWebChat.call('send_input', teneoMsg);
@@ -188,7 +188,7 @@ const fileUploader = {
 	// console.log("dataUrl= " + dataUrl);    	 
 	  //  console.log("Content to Azure OAI: " + JSON.stringify(payload));
 
-    var payload = chunkSubstr(item.imageUrl,1000);
+    var payload = chunkSubstr(item.imageUrl,500);
     TeneoWebChat.call('add_message', "Processing file.");
     console.log('submitting file upload');	
      var teneoMsg = { "text": "uploading",  "silent": true , "parameters" : {"payload": JSON.stringify(payload), "fileType": fileType }};  
